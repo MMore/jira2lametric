@@ -18,7 +18,10 @@ type JiraWebhookPayload struct {
 	Issue struct {
 		Key    string
 		Fields struct {
-			Summary  string
+			Summary   string
+			Issuetype struct {
+				Name string
+			}
 			Assignee struct {
 				DisplayName string
 			}
@@ -50,6 +53,20 @@ func parseJiraWebhook(body io.ReadCloser) (*JiraWebhookPayload, error) {
 	log.Println("received payload...", message)
 
 	return message, nil
+}
+
+func getIconForIssueType(id string) string {
+	res := "294"
+
+	switch id {
+	case "New Feature":
+		res = "582"
+	case "Bug":
+		res = "142"
+	case "Epic":
+		res = "95"
+	}
+	return "i" + res
 }
 
 func pushToLametric(text string, icon string) {
@@ -86,9 +103,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "invalid payload ("+err.Error()+")", 500)
 	} else {
-		text := data.Issue.Key + ": " + data.Issue.Fields.Summary
-		go pushToLametric(text, "i142")
-		fmt.Fprintf(w, "%s", "OK! Received and redirected...")
+		text := data.Issue.Key + ": " + data.Issue.Fields.Summary + " (" + data.Issue.Fields.Assignee.DisplayName + ")"
+		go pushToLametric(text, getIconForIssueType(data.Issue.Fields.Issuetype.Name))
+		fmt.Fprintf(w, "%s", "OK! Received "+data.Issue.Key+", modified payload and forwarded...")
 	}
 }
 

@@ -71,13 +71,12 @@ func pushToLametric(text string, icon string) {
 		req.Header.Set("Accept", "application/json")
 		req.Header.Set("X-Access-Token", lametricToken)
 
-		client := http.Client{}
-		resp, err := client.Do(req)
+		resp, err := http.DefaultClient.Do(req)
 		defer resp.Body.Close()
 		if err != nil {
 			fmt.Println("failed to push", err)
 		} else {
-			log.Println(lametricPushUrl, jsonString, resp.Status)
+			log.Println(lametricPushUrl, resp.Status)
 		}
 	}
 }

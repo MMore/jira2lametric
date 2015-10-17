@@ -122,6 +122,6 @@ func main() {
 	}
 
 	log.Println("start listening on port", port+"...")
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/created", handler)
 	http.ListenAndServe(":"+port, nil)
 }

@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/MMore/lametric-jira",
+	"ImportPath": "github.com/MMore/jira2lametric",
 	"GoVersion": "go1.4.1",
 	"Deps": []
 }

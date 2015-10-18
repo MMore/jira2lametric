@@ -1,1 +1,1 @@
-web: lametric-jira
+web: jira2lametric

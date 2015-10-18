@@ -1,0 +1,15 @@
+{
+  "name": "jira2lametric",
+  "description": "A small wrapper to push your just created JIRA issues to your LaMetric.",
+  "repository": "https://github.com/MMore/jira2lametric",
+  "env": {
+    "LAMETRIC_PUSH_URL": {
+      "description": "Your personal lametric device push url. You find it in your app settings.",
+      "value": ""
+    },
+    "LAMETRIC_TOKEN": {
+      "description": "Your personal token for your lametric app. You find it in your app settings.",
+      "value": ""
+    }
+  }
+}

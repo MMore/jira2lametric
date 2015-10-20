@@ -103,7 +103,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "invalid payload ("+err.Error()+")", 500)
 	} else {
-		text := data.Issue.Key + ": " + data.Issue.Fields.Summary + " (" + data.Issue.Fields.Assignee.DisplayName + ")"
+		text := data.Issue.Key + ": " + data.Issue.Fields.Summary
+		if data.Issue.Fields.Assignee.DisplayName != "" {
+			text += " (" + data.Issue.Fields.Assignee.DisplayName + ")"
+		}
+
 		go pushToLametric(text, getIconForIssueType(data.Issue.Fields.Issuetype.Name))
 		fmt.Fprintf(w, "%s", "OK! Received "+data.Issue.Key+", modified payload and forwarded...")
 	}
